@@ -5,7 +5,7 @@ import { TorusWalletAdapter } from '@solana/wallet-adapter-torus';
 import { PublicKey } from '@solana/web3.js';
 import React, { FC, useMemo } from 'react';
 import { Outlet, useSearchParams } from 'react-router-dom';
-import { DEVNET_ENDPOINT } from '../../utils/constants';
+import { DEVNET_ENDPOINT, MAINNET_ENDPOINT, MAINNET_USDC_MINT } from '../../utils/constants';
 import { ConfigProvider } from '../contexts/ConfigProvider';
 import { FullscreenProvider } from '../contexts/FullscreenProvider';
 import { PaymentProvider } from '../contexts/PaymentProvider';
@@ -13,6 +13,7 @@ import { ThemeProvider } from '../contexts/ThemeProvider';
 import { TransactionsProvider } from '../contexts/TransactionsProvider';
 import { SolanaPayLogo } from '../images/SolanaPayLogo';
 import { SOLIcon } from '../images/SOLIcon';
+import { USDCIcon } from '../images/USDCIcon';
 import * as css from './RootRoute.module.pcss';
 
 export const RootRoute: FC = () => {
@@ -45,16 +46,17 @@ export const RootRoute: FC = () => {
         <ThemeProvider>
             <FullscreenProvider>
                 {recipient && label ? (
-                    <ConnectionProvider endpoint={DEVNET_ENDPOINT}>
+                    <ConnectionProvider endpoint={MAINNET_ENDPOINT}>
                         <WalletProvider wallets={wallets} autoConnect={connectWallet}>
                             <WalletModalProvider>
                                 <ConfigProvider
                                     recipient={recipient}
                                     label={label}
-                                    symbol="SOL"
-                                    icon={<SOLIcon />}
-                                    decimals={9}
-                                    minDecimals={1}
+                                    splToken={MAINNET_USDC_MINT}
+                                    symbol="USDC"
+                                    icon={<USDCIcon />}
+                                    decimals={6}
+                                    minDecimals={2}
                                     requiredConfirmations={9}
                                     connectWallet={connectWallet}
                                 >
